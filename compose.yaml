@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=starFractionDB'
+      - 'POSTGRES_PASSWORD=password'
+      - 'POSTGRES_USER=josedsferreira'
+    ports:
+      - '5432:5432'

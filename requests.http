@@ -1,0 +1,36 @@
+
+// GET planets
+GET http://localhost:8080/planets
+
+###
+// CREATE planet ENTRY
+POST http://localhost:8080/planets
+Content-Type: application/json
+
+{
+    "planetName": "Mustafar",
+    "planetSize": "large"
+}
+
+###
+// UPDATE planet ENTRY
+POST http://localhost:8080/planets
+Content-Type: application/json
+
+{
+    "id": 1,
+    "planetName": "Venus",
+    "planetSize": "small"
+}
+
+###
+// GET planet
+GET http://localhost:8080/planets/1
+
+###
+// GET planet that does not exist
+GET http://localhost:8080/planets/100
+
+###
+// DELETE planet
+DELETE http://localhost:8080/planet/2
