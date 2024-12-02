@@ -62,7 +62,7 @@ public class PlanetController {
         else return planet.get();
     }
 
-    // FIND BY Name
+    // FIND BY Size
     @GetMapping("/{size}")
     public Planet getPlanetBySize(@PathVariable PlanetSize size) {
         Optional<Planet> planet = service.getPlanetsBySize(size);
