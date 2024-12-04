@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.jf.starFraction.auth.infra.security.TokenService;
 import dev.jf.starFraction.auth.users.AuthenticationDTO;
+import dev.jf.starFraction.auth.users.LoginResponseDTO;
 import dev.jf.starFraction.auth.users.RegisterDTO;
 import dev.jf.starFraction.auth.users.User;
 import dev.jf.starFraction.auth.users.UserRepository;
@@ -26,16 +28,39 @@ public class AuthenticationController {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        return ResponseEntity.ok().build();
+        //System.out.println(data);
+        //System.out.println("0-Login request received from username " + data.username());
+        try {
+            var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
+            //System.out.println("1-UsernamePassword step done: " + usernamePassword);
+    
+            var auth = this.authenticationManager.authenticate(usernamePassword);
+            //System.out.println("2-auth step done: " + auth);
+    
+            var token = tokenService.generateToken((User) auth.getPrincipal());
+            //System.out.println("3-token generated: " + token);
+    
+            //System.out.println("4-Login successful for username: " + data.username());
+    
+            return ResponseEntity.ok(new LoginResponseDTO(token));
+        }
+        catch (Exception e) {
+            System.out.println("#-Login failed for username: " + data.username());
+            System.out.println("Error: " + e);
+            return ResponseEntity.badRequest().build();
+        }
+        
     }
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
+        
         if(this.repository.findByUsername(data.username()) != null) return ResponseEntity.badRequest().build();
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());

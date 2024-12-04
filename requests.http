@@ -34,3 +34,13 @@ GET http://localhost:8080/planets/100
 ###
 // DELETE planet
 DELETE http://localhost:8080/planet/2
+
+###
+// LOGIN
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+    "username": "wintermute",
+    "password": "123456789"
+}

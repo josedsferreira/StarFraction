@@ -32,6 +32,9 @@ public class User implements UserDetails{
     @Column(name = "role", nullable = false, length = 255)
     private UserRole role;
 
+    public User() {
+    }
+
     public User(String username, String password, UserRole role) {
         this.username = username;
         this.password = password;
