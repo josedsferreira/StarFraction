@@ -35,7 +35,7 @@ public class AuthenticationController {
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
 
         //System.out.println(data);
-        //System.out.println("0-Login request received from username " + data.username());
+        System.out.println("0-Login request received from username " + data.username());
         try {
             var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
             //System.out.println("1-UsernamePassword step done: " + usernamePassword);
@@ -43,12 +43,14 @@ public class AuthenticationController {
             var auth = this.authenticationManager.authenticate(usernamePassword);
             //System.out.println("2-auth step done: " + auth);
     
-            var token = tokenService.generateToken((User) auth.getPrincipal());
+            var user = (User) auth.getPrincipal(); // get the user from database
+            
+            var token = tokenService.generateToken(user);
             //System.out.println("3-token generated: " + token);
     
             //System.out.println("4-Login successful for username: " + data.username());
     
-            return ResponseEntity.ok(new LoginResponseDTO(token));
+            return ResponseEntity.ok(new LoginResponseDTO(token, user.getUserId(), user.getUsername(), user.getRole()));
         }
         catch (Exception e) {
             System.out.println("#-Login failed for username: " + data.username());
