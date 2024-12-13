@@ -34,8 +34,11 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
 
-        //System.out.println(data);
-        System.out.println("0-Login request received from username " + data.email());
+        java.time.LocalTime time = java.time.LocalTime.now();
+        System.out.println("0-Login request from user " + data.email() + " at: " + time);
+        /* System.out.println("Full data: ");
+        System.out.println(data); */
+
         try {
             var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
             //System.out.println("1-UsernamePassword step done: " + usernamePassword);
@@ -53,7 +56,7 @@ public class AuthenticationController {
             return ResponseEntity.ok(new LoginResponseDTO(token, user.getUserId(), user.getEmail(), user.getUsername(), user.getRole()));
         }
         catch (Exception e) {
-            System.out.println("#-Login failed for username: " + data.email());
+            System.out.println("#-Login failed for user: " + data.email());
             System.out.println("Error: " + e);
             return ResponseEntity.badRequest().build();
         }
