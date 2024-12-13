@@ -23,6 +23,9 @@ public class User implements UserDetails{
     @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "email", nullable = false, length = 255)
+    private String email;
+
     @Column(name = "username", nullable = false, length = 255)
     private String username;
     
@@ -35,9 +38,10 @@ public class User implements UserDetails{
     public User() {
     }
 
-    public User(String username, String password, UserRole role) {
-        this.username = username;
+    public User(String email, String password, String username, UserRole role) {
+        this.email = email;
         this.password = password;
+        this.username = username;
         this.role = role;
     }
 
@@ -83,5 +87,13 @@ public class User implements UserDetails{
         else {
             return List.of(new SimpleGrantedAuthority("ROLE_USER"));
         }
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

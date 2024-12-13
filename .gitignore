@@ -32,3 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 ogame.txt
+SFcon1.session.sql

@@ -35,9 +35,9 @@ public class AuthenticationController {
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
 
         //System.out.println(data);
-        System.out.println("0-Login request received from username " + data.username());
+        System.out.println("0-Login request received from username " + data.email());
         try {
-            var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
+            var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
             //System.out.println("1-UsernamePassword step done: " + usernamePassword);
     
             var auth = this.authenticationManager.authenticate(usernamePassword);
@@ -50,10 +50,10 @@ public class AuthenticationController {
     
             //System.out.println("4-Login successful for username: " + data.username());
     
-            return ResponseEntity.ok(new LoginResponseDTO(token, user.getUserId(), user.getUsername(), user.getRole()));
+            return ResponseEntity.ok(new LoginResponseDTO(token, user.getUserId(), user.getEmail(), user.getUsername(), user.getRole()));
         }
         catch (Exception e) {
-            System.out.println("#-Login failed for username: " + data.username());
+            System.out.println("#-Login failed for username: " + data.email());
             System.out.println("Error: " + e);
             return ResponseEntity.badRequest().build();
         }
@@ -63,10 +63,10 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
         
-        if(this.repository.findByUsername(data.username()) != null) return ResponseEntity.badRequest().build();
+        if(this.repository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.username(), encryptedPassword, data.role());
+        User newUser = new User(data.email(), encryptedPassword, data.username(), data.role());
 
         this.repository.save(newUser);
 
