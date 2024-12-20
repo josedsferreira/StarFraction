@@ -25,6 +25,8 @@ public class Planet {
 
     @Enumerated(EnumType.STRING)
     @Column(name="planet_size")
-    private PlanetSize planetSize;    
+    private PlanetSize planetSize;
 
+    @Column(name="user_id")
+    private Long userId;
 }

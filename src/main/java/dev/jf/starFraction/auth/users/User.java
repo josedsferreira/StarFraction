@@ -7,11 +7,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import dev.jf.starFraction.planets.Planet;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -37,6 +41,10 @@ public class User implements UserDetails{
     @Column(name = "role", nullable = false, length = 255)
     private UserRole role;
 
+    @OneToMany(cascade= CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private List<Planet> userPlanets;
+
     public User() {
     }
 
@@ -47,6 +55,7 @@ public class User implements UserDetails{
         this.role = role;
     }
 
+    // Not necessary anymore due to lombok
     /* public Long getUserId() {
         return userId;
     }
