@@ -26,8 +26,9 @@ public class PlanetController {
 
     // GET
     @GetMapping
-    public List<Planet> getAllPlanets() {
-        return service.getAllPlanets();
+    public ResponseEntity<List<Planet>> getAllPlanets() {
+        List<Planet> planets = service.getAllPlanets();
+        return ResponseEntity.ok(planets);
     }
 
     // POST
@@ -40,38 +41,38 @@ public class PlanetController {
 
     // FIND BY ID
     @GetMapping("/{id}")
-    public Planet getPlanetById(@PathVariable Long id) {
+    public ResponseEntity<Planet> getPlanetById(@PathVariable Long id) {
         Optional<Planet> planet = service.getPlanetById(id);
         if (planet.isEmpty()) {
             throw new ResponseStatusException(
-            HttpStatus.NOT_FOUND, "Planet not found with ID " + id
+                HttpStatus.NOT_FOUND, "Planet not found with ID " + id
             );
         }
-        else return planet.get();
+        return ResponseEntity.ok(planet.get());
     }
 
     // FIND BY Name
     @GetMapping("/{name}")
-    public Planet getPlanetByName(@PathVariable String name) {
-        Optional<Planet> planet = service.getPlanetByName(name);
-        if (planet.isEmpty()) {
+    public ResponseEntity<List<Planet>> getPlanetByName(@PathVariable String name) {
+        List<Planet> planetList = service.getPlanetByName(name);
+        if (planetList.isEmpty()) {
             throw new ResponseStatusException(
             HttpStatus.NOT_FOUND, "No planet found with name " + name
             );
         }
-        else return planet.get();
+        else return ResponseEntity.ok(planetList);
     }
 
     // FIND BY Size
     @GetMapping("/{size}")
-    public Planet getPlanetBySize(@PathVariable PlanetSize size) {
-        Optional<Planet> planet = service.getPlanetsBySize(size);
-        if (planet.isEmpty()) {
+    public ResponseEntity<List<Planet>> getPlanetBySize(@PathVariable PlanetSize size) {
+        List<Planet> planetList = service.getPlanetsBySize(size);
+        if (planetList.isEmpty()) {
             throw new ResponseStatusException(
             HttpStatus.NOT_FOUND, "No planet found with size " + size
             );
         }
-        else return planet.get();
+        else return ResponseEntity.ok(planetList);
     }
     
 

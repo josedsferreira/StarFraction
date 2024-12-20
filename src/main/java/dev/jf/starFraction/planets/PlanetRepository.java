@@ -1,6 +1,6 @@
 package dev.jf.starFraction.planets;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PlanetRepository extends JpaRepository<Planet, Long>{
 
-    Optional<Planet> findByPlanetSize(PlanetSize planetSize);
-    Optional<Planet> findByPlanetName(String planetName);
+    List<Planet> findByPlanetSize(PlanetSize planetSize);
+    List<Planet> findByPlanetName(String planetName);
 }

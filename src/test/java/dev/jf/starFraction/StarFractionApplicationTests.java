@@ -8,6 +8,6 @@ class StarFractionApplicationTests {
 
 	@Test
 	void contextLoads() {
-	}
+	} // Make sure the container is running before testing
 
 }

@@ -30,11 +30,11 @@ public class PlanetService {
         return repository.findAll();
     }
 
-    public Optional<Planet> getPlanetByName(String name) {
+    public List<Planet> getPlanetByName(String name) {
         return repository.findByPlanetName(name);
     }
 
-    public Optional<Planet> getPlanetsBySize(PlanetSize size) {
+    public List<Planet> getPlanetsBySize(PlanetSize size) {
         return repository.findByPlanetSize(size);
     }
 }
