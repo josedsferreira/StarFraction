@@ -13,9 +13,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @Table(name = "users")
 @Entity(name = "users")
+@Data
 public class User implements UserDetails{
 
     @Id
@@ -45,7 +47,7 @@ public class User implements UserDetails{
         this.role = role;
     }
 
-    public Long getUserId() {
+    /* public Long getUserId() {
         return userId;
     }
 
@@ -79,6 +81,14 @@ public class User implements UserDetails{
         this.role = role;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    } */
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.role == UserRole.ADMIN){
@@ -89,11 +99,4 @@ public class User implements UserDetails{
         }
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }
