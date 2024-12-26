@@ -1,5 +1,7 @@
 package dev.jf.starFraction.Models;
 
+import java.util.Random;
+
 import dev.jf.starFraction.Models.enums.PlanetSize;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -50,9 +52,16 @@ public class Planet {
     private MiscBuildings miscBuildings;
 
     public Planet() {
+        this.planetSize = getRandomPlanetSize();
         this.resourceBuildings = new ResourceBuildings();
         this.storageBuildings = new StorageBuildings();
         this.miscBuildings = new MiscBuildings();
+    }
+
+    static public PlanetSize getRandomPlanetSize() {
+        PlanetSize[] sizes = PlanetSize.values();
+        int randomIndex = new Random().nextInt(sizes.length);
+        return sizes[randomIndex];
     }
 
 }

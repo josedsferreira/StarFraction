@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.jf.starFraction.DTOs.AuthenticationDTO;
 import dev.jf.starFraction.DTOs.LoginResponseDTO;
 import dev.jf.starFraction.DTOs.RegisterDTO;
+import dev.jf.starFraction.Models.Planet;
 import dev.jf.starFraction.Models.User;
 import dev.jf.starFraction.auth.infra.security.TokenService;
 import dev.jf.starFraction.repositories.UserRepository;
+import dev.jf.starFraction.services.PlanetService;
 import jakarta.validation.Valid;
 
 @RestController
@@ -30,6 +32,9 @@ public class AuthenticationController {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private PlanetService planetService;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
@@ -71,7 +76,13 @@ public class AuthenticationController {
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         User newUser = new User(data.email(), encryptedPassword, data.username(), data.role());
 
-        this.repository.save(newUser);
+        User savedUser = this.repository.save(newUser);
+
+        // Create a planet for the new user
+        Planet newPlanet = new Planet();
+        newPlanet.setUserId(savedUser.getUserId());
+        newPlanet.setPlanetName("New Colony");
+        planetService.savePlanet(newPlanet);
 
         return ResponseEntity.ok().build();
     }
