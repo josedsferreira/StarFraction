@@ -1,4 +1,4 @@
-package dev.jf.starFraction.planets;
+package dev.jf.starFraction.controllers;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
+import dev.jf.starFraction.Models.Planet;
+import dev.jf.starFraction.Models.enums.PlanetSize;
+import dev.jf.starFraction.services.PlanetService;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -75,5 +80,43 @@ public class PlanetController {
         else return ResponseEntity.ok(planetList);
     }
     
+    // UPGRADE RESOURCE BUILDING
+    @PostMapping("/{id}/upgradeResourceBuilding/{buildingType}")
+    public ResponseEntity<Planet> upgradeResourceBuilding(@PathVariable Long id, @PathVariable String buildingType) {
+        try {
+            service.upgradeResourceBuilding(id, buildingType);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST, e.getMessage()
+            );
+        }
+    }
+
+    // UPGRADE STORAGE BUILDING
+    @PostMapping("/{id}/upgradeStorageBuilding/{buildingType}")
+    public ResponseEntity<Planet> upgradeStorageBuilding(@PathVariable Long id, @PathVariable String buildingType) {
+        try {
+            service.upgradeStorageBuilding(id, buildingType);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST, e.getMessage()
+            );
+        }
+    }
+
+    // UPGRADE MISC BUILDING
+    @PostMapping("/{id}/upgradeMiscBuilding/{buildingType}")
+    public ResponseEntity<Planet> upgradeMiscBuilding(@PathVariable Long id, @PathVariable String buildingType) {
+        try {
+            service.upgradeMiscBuilding(id, buildingType);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST, e.getMessage()
+            );
+        }
+    }
 
 }

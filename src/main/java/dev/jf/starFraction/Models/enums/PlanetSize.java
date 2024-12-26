@@ -1,4 +1,4 @@
-package dev.jf.starFraction.planets;
+package dev.jf.starFraction.Models.enums;
 
 public enum PlanetSize {
     small,

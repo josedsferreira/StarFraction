@@ -1,4 +1,4 @@
-package dev.jf.starFraction.auth;
+package dev.jf.starFraction.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.jf.starFraction.DTOs.AuthenticationDTO;
+import dev.jf.starFraction.DTOs.LoginResponseDTO;
+import dev.jf.starFraction.DTOs.RegisterDTO;
+import dev.jf.starFraction.Models.User;
 import dev.jf.starFraction.auth.infra.security.TokenService;
-import dev.jf.starFraction.auth.users.AuthenticationDTO;
-import dev.jf.starFraction.auth.users.LoginResponseDTO;
-import dev.jf.starFraction.auth.users.RegisterDTO;
-import dev.jf.starFraction.auth.users.User;
-import dev.jf.starFraction.auth.users.UserRepository;
+import dev.jf.starFraction.repositories.UserRepository;
 import jakarta.validation.Valid;
 
 @RestController

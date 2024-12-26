@@ -1,4 +1,4 @@
-package dev.jf.starFraction.auth.users;
+package dev.jf.starFraction.Models.enums;
 
 public enum UserRole {
 

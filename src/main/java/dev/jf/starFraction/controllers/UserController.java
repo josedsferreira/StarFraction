@@ -1,4 +1,4 @@
-package dev.jf.starFraction.auth.users;
+package dev.jf.starFraction.controllers;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import dev.jf.starFraction.planets.Planet;
+import dev.jf.starFraction.DTOs.UserDTO;
+import dev.jf.starFraction.Models.Planet;
+import dev.jf.starFraction.Models.User;
+import dev.jf.starFraction.services.UserService;
 
 @RestController
 @RequestMapping("/users")

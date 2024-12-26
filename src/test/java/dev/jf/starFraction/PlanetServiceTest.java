@@ -15,10 +15,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import dev.jf.starFraction.planets.Planet;
-import dev.jf.starFraction.planets.PlanetRepository;
-import dev.jf.starFraction.planets.PlanetService;
-import dev.jf.starFraction.planets.PlanetSize;
+import dev.jf.starFraction.Models.Planet;
+import dev.jf.starFraction.Models.enums.PlanetSize;
+import dev.jf.starFraction.repositories.PlanetRepository;
+import dev.jf.starFraction.services.PlanetService;
 
 public class PlanetServiceTest {
 

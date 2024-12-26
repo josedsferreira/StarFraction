@@ -1,11 +1,13 @@
-package dev.jf.starFraction.auth.users;
+package dev.jf.starFraction.services;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import dev.jf.starFraction.planets.Planet;
+import dev.jf.starFraction.Models.Planet;
+import dev.jf.starFraction.Models.User;
+import dev.jf.starFraction.repositories.UserRepository;
 
 @Service
 public class UserService {
