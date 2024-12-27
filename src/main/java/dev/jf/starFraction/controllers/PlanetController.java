@@ -80,37 +80,11 @@ public class PlanetController {
         else return ResponseEntity.ok(planetList);
     }
     
-    // UPGRADE RESOURCE BUILDING
-    @PostMapping("/{id}/upgradeResourceBuilding/{buildingType}")
-    public ResponseEntity<Planet> upgradeResourceBuilding(@PathVariable Long id, @PathVariable String buildingType) {
+    // UPGRADE BUILDING
+    @PostMapping("/{id}/upgradeBuilding/{buildingType}")
+    public ResponseEntity<Planet> upgradeBuilding(@PathVariable Long id, @PathVariable String buildingType) {
         try {
-            service.upgradeResourceBuilding(id, buildingType);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            throw new ResponseStatusException(
-                HttpStatus.BAD_REQUEST, e.getMessage()
-            );
-        }
-    }
-
-    // UPGRADE STORAGE BUILDING
-    @PostMapping("/{id}/upgradeStorageBuilding/{buildingType}")
-    public ResponseEntity<Planet> upgradeStorageBuilding(@PathVariable Long id, @PathVariable String buildingType) {
-        try {
-            service.upgradeStorageBuilding(id, buildingType);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            throw new ResponseStatusException(
-                HttpStatus.BAD_REQUEST, e.getMessage()
-            );
-        }
-    }
-
-    // UPGRADE MISC BUILDING
-    @PostMapping("/{id}/upgradeMiscBuilding/{buildingType}")
-    public ResponseEntity<Planet> upgradeMiscBuilding(@PathVariable Long id, @PathVariable String buildingType) {
-        try {
-            service.upgradeMiscBuilding(id, buildingType);
+            service.upgradePlanetBuilding(id, buildingType);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             throw new ResponseStatusException(

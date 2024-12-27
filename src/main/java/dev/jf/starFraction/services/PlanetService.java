@@ -5,10 +5,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import dev.jf.starFraction.Models.MiscBuildings;
 import dev.jf.starFraction.Models.Planet;
-import dev.jf.starFraction.Models.ResourceBuildings;
-import dev.jf.starFraction.Models.StorageBuildings;
+import dev.jf.starFraction.Models.PlanetBuildings;
 import dev.jf.starFraction.Models.enums.PlanetSize;
 import dev.jf.starFraction.repositories.PlanetRepository;
 
@@ -51,72 +49,32 @@ public class PlanetService {
         return repository.findByPlanetSize(size);
     }
 
-    public ResourceBuildings getResourceBuildings(Long id) {
-        return repository.findById(id).get().getResourceBuildings();
+    public PlanetBuildings getPlanetBuildings(Long id) {
+        return repository.findById(id).get().getPlanetBuildings();
     }
 
-    public void updateResourceBuildings(Long id, ResourceBuildings resourceBuildings) {
+    public void updatePlanetBuildings(Long id, PlanetBuildings planetBuildings) {
         Planet planet = repository.findById(id).get();
-        planet.setResourceBuildings(resourceBuildings);
+        planet.setPlanetBuildings(planetBuildings);
         repository.save(planet);
     }
 
-    public void upgradeResourceBuilding(Long id, String buildingType) throws Exception {
+    public void upgradePlanetBuilding(Long id, String buildingType) throws Exception {
         Planet planet = repository.findById(id).get();
         switch (buildingType) {
-            case "metalMine" -> planet.getResourceBuildings().setMetalMineLevel();
-            case "crystalMine" -> planet.getResourceBuildings().setCrystalMineLevel();
-            case "deuteriumMine" -> planet.getResourceBuildings().setDeuteriumMineLevel();
-            case "solarPlant" -> planet.getResourceBuildings().setSolarPlantLevel();
+            case "metalMine" -> planet.getPlanetBuildings().setMetalMineLevel();
+            case "crystalMine" -> planet.getPlanetBuildings().setCrystalMineLevel();
+            case "deuteriumMine" -> planet.getPlanetBuildings().setDeuteriumMineLevel();
+            case "solarPlant" -> planet.getPlanetBuildings().setSolarPlantLevel();
+            case "metalStorage" -> planet.getPlanetBuildings().setMetalStorageLevel();
+            case "crystalStorage" -> planet.getPlanetBuildings().setCrystalStorageLevel();
+            case "deuteriumStorage" -> planet.getPlanetBuildings().setDeuteriumStorageLevel();
+            case "shipyard" -> planet.getPlanetBuildings().setShipyardLevel();
+            case "researchLab" -> planet.getPlanetBuildings().setResearchLabLevel();
             default -> {
                 throw new Exception("Invalid building type");
             }
         }
-        repository.save(planet);
-    }
-
-    public void upgradeStorageBuilding(Long id, String buildingType) throws Exception {
-        Planet planet = repository.findById(id).get();
-        switch (buildingType) {
-            case "metalStorage" -> planet.getStorageBuildings().setMetalStorageLevel();
-            case "crystalStorage" -> planet.getStorageBuildings().setCrystalStorageLevel();
-            case "deuteriumStorage" -> planet.getStorageBuildings().setDeuteriumStorageLevel();
-            default -> {
-                throw new Exception("Invalid building type");
-            }
-        }
-        repository.save(planet);
-    }
-
-    public void upgradeMiscBuilding(Long id, String buildingType) throws Exception {
-        Planet planet = repository.findById(id).get();
-        switch (buildingType) {
-            case "shipyard" -> planet.getMiscBuildings().setShipyardLevel();
-            case "researchLab" -> planet.getMiscBuildings().setResearchLabLevel();
-            default -> {
-                throw new Exception("Invalid building type");
-            }
-        }
-        repository.save(planet);
-    }
-
-    public StorageBuildings getStorageBuildings(Long id) {
-        return repository.findById(id).get().getStorageBuildings();
-    }
-
-    public void updateStorageBuildings(Long id, StorageBuildings storageBuildings) {
-        Planet planet = repository.findById(id).get();
-        planet.setStorageBuildings(storageBuildings);
-        repository.save(planet);
-    }
-
-    public MiscBuildings getMiscBuildings(Long id) {
-        return repository.findById(id).get().getMiscBuildings();
-    }
-
-    public void updateMiscBuildings(Long id, MiscBuildings miscBuildings) {
-        Planet planet = repository.findById(id).get();
-        planet.setMiscBuildings(miscBuildings);
         repository.save(planet);
     }
 

@@ -36,26 +36,14 @@ public class Planet {
     @Column(name="user_id")
     private Long userId;
 
-    // Resource Buildings
+    // Buildings and resources
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "resource_buildings_id", referencedColumnName = "id")
-    private ResourceBuildings resourceBuildings;
-
-    // Storage
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "storage_buildings_id", referencedColumnName = "id")
-    private StorageBuildings storageBuildings;
-
-    // Facility Buildings
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "misc_buildings_id", referencedColumnName = "id")
-    private MiscBuildings miscBuildings;
+    @JoinColumn(name = "planet_buildings_id", referencedColumnName = "id")
+    private PlanetBuildings planetBuildings;
 
     public Planet() {
         this.planetSize = getRandomPlanetSize();
-        this.resourceBuildings = new ResourceBuildings();
-        this.storageBuildings = new StorageBuildings();
-        this.miscBuildings = new MiscBuildings();
+        this.planetBuildings = new PlanetBuildings();
     }
 
     static public PlanetSize getRandomPlanetSize() {
