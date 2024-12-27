@@ -15,8 +15,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import dev.jf.starFraction.Models.Planet;
-import dev.jf.starFraction.Models.enums.PlanetSize;
+import dev.jf.starFraction.models.Planet;
+import dev.jf.starFraction.models.enums.PlanetSize;
 import dev.jf.starFraction.repositories.PlanetRepository;
 import dev.jf.starFraction.services.PlanetService;
 

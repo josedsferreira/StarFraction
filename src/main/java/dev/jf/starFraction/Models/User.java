@@ -1,4 +1,4 @@
-package dev.jf.starFraction.Models;
+package dev.jf.starFraction.models;
 
 import java.util.Collection;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import dev.jf.starFraction.Models.enums.UserRole;
+import dev.jf.starFraction.models.enums.UserRole;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

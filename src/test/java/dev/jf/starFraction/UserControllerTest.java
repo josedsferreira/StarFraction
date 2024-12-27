@@ -24,13 +24,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import dev.jf.starFraction.Models.User;
-import dev.jf.starFraction.Models.enums.UserRole;
 import dev.jf.starFraction.auth.infra.security.SecurityConfigurations;
 import dev.jf.starFraction.auth.infra.security.SecurityFilter;
 import dev.jf.starFraction.auth.infra.security.TokenService;
 import dev.jf.starFraction.controllers.AuthenticationController;
 import dev.jf.starFraction.controllers.UserController;
+import dev.jf.starFraction.models.User;
+import dev.jf.starFraction.models.enums.UserRole;
 import dev.jf.starFraction.services.AuthorizationService;
 import dev.jf.starFraction.services.UserService;
 

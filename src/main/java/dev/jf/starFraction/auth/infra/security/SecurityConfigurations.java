@@ -27,6 +27,9 @@ public class SecurityConfigurations {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.GET, "/planets").permitAll() // for debuging purposes
+                        .requestMatchers(HttpMethod.GET, "/planets/{id}").permitAll() // for debuging purposes
+                        .requestMatchers(HttpMethod.POST, "/planets/{id}/upgradeBuilding/{buildingType}").permitAll() // for debuging purposes
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/planets").hasRole("ADMIN")

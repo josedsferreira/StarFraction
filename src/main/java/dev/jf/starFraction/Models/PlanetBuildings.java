@@ -1,4 +1,4 @@
-package dev.jf.starFraction.Models;
+package dev.jf.starFraction.models;
 
 import java.time.LocalDateTime;
 
@@ -73,39 +73,39 @@ public class PlanetBuildings {
 
 
     // setters for building levels must only allow values to be incremented by 1
-    public void setShipyardLevel() {
-        this.shipyardLevel = this.shipyardLevel++;
+    public void incrementShipyardLevel() {
+        this.shipyardLevel++;
     }
 
-    public void setResearchLabLevel() {
-        this.researchLabLevel = this.researchLabLevel++;
+    public void incrementResearchLabLevel() {
+        this.researchLabLevel++;
     }
 
-    public void setMetalStorageLevel() {
-        this.metalStorageLevel = this.metalStorageLevel++;
+    public void incrementMetalStorageLevel() {
+        this.metalStorageLevel++;
     }
 
-    public void setCrystalStorageLevel() {
-        this.crystalStorageLevel = this.crystalStorageLevel++;
+    public void incrementCrystalStorageLevel() {
+        this.crystalStorageLevel++;
     }
 
-    public void setDeuteriumStorageLevel() {
-        this.deuteriumStorageLevel = this.deuteriumStorageLevel++;
+    public void incrementDeuteriumStorageLevel() {
+        this.deuteriumStorageLevel++;
     }
 
-    public void setMetalMineLevel() {
-        this.metalMineLevel = this.metalMineLevel++;
+    public void incrementMetalMineLevel() {
+        this.metalMineLevel++;
     }
 
-    public void setCrystalMineLevel() {
-        this.crystalMineLevel = this.crystalMineLevel++;
+    public void incrementCrystalMineLevel() {
+        this.crystalMineLevel++;
     }
 
-    public void setDeuteriumMineLevel() {
-        this.deuteriumMineLevel = this.deuteriumMineLevel++;
+    public void incrementDeuteriumMineLevel() {
+        this.deuteriumMineLevel++;
     }
 
-    public void setSolarPlantLevel() {
-        this.solarPlantLevel = this.solarPlantLevel++;
+    public void incrementSolarPlantLevel() {
+        this.solarPlantLevel++;
     }
 }

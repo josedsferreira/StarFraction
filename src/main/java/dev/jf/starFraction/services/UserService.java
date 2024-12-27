@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import dev.jf.starFraction.Models.Planet;
-import dev.jf.starFraction.Models.User;
+import dev.jf.starFraction.models.Planet;
+import dev.jf.starFraction.models.User;
 import dev.jf.starFraction.repositories.UserRepository;
 
 @Service

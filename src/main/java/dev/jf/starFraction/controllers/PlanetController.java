@@ -7,16 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import dev.jf.starFraction.Models.Planet;
-import dev.jf.starFraction.Models.enums.PlanetSize;
+import dev.jf.starFraction.models.Planet;
 import dev.jf.starFraction.services.PlanetService;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -47,6 +45,7 @@ public class PlanetController {
     // FIND BY ID
     @GetMapping("/{id}")
     public ResponseEntity<Planet> getPlanetById(@PathVariable Long id) {
+        service.updateResources(id);
         Optional<Planet> planet = service.getPlanetById(id);
         if (planet.isEmpty()) {
             throw new ResponseStatusException(
@@ -57,7 +56,7 @@ public class PlanetController {
     }
 
     // FIND BY Name
-    @GetMapping("/{name}")
+    /* @GetMapping("/{name}")
     public ResponseEntity<List<Planet>> getPlanetByName(@PathVariable String name) {
         List<Planet> planetList = service.getPlanetByName(name);
         if (planetList.isEmpty()) {
@@ -66,10 +65,10 @@ public class PlanetController {
             );
         }
         else return ResponseEntity.ok(planetList);
-    }
+    } */
 
     // FIND BY Size
-    @GetMapping("/{size}")
+    /* @GetMapping("/{size}")
     public ResponseEntity<List<Planet>> getPlanetBySize(@PathVariable PlanetSize size) {
         List<Planet> planetList = service.getPlanetsBySize(size);
         if (planetList.isEmpty()) {
@@ -78,7 +77,7 @@ public class PlanetController {
             );
         }
         else return ResponseEntity.ok(planetList);
-    }
+    } */
     
     // UPGRADE BUILDING
     @PostMapping("/{id}/upgradeBuilding/{buildingType}")

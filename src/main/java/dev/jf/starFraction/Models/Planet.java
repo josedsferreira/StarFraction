@@ -1,8 +1,8 @@
-package dev.jf.starFraction.Models;
+package dev.jf.starFraction.models;
 
 import java.util.Random;
 
-import dev.jf.starFraction.Models.enums.PlanetSize;
+import dev.jf.starFraction.models.enums.PlanetSize;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import dev.jf.starFraction.DTOs.UserDTO;
-import dev.jf.starFraction.Models.Planet;
-import dev.jf.starFraction.Models.User;
+import dev.jf.starFraction.models.Planet;
+import dev.jf.starFraction.models.User;
 import dev.jf.starFraction.services.UserService;
 
 @RestController
