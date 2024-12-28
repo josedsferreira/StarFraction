@@ -4,12 +4,11 @@ In progress project created to study backend development using Java Spring Boot.
 
 The frontend is also being studied and developed using Next.js. [Link](https://github.com/josedsferreira/StarFraction-Frontend)
 
-Currently implemented features:
+Already implemented features:
 - User authentication with roles
 - Persistence for users and user's planets
-
-In progress:
-- Testing
+- Planet buildings construction, resource production, resource limits
+- Basic game economy
 
 Tecnologies used:
 - Spring Boot

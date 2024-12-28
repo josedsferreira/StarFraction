@@ -1,6 +1,18 @@
 package dev.jf.starFraction.game;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class GameConfig {
+
+    // Contruction Time
+    public static Integer calculateBuildingTimeInSeconds(int metalCost, int CrystalCost) {
+        int robotFactoryLevel = 1;
+        return (int) ((metalCost + CrystalCost) / (2500 * robotFactoryLevel)) * 60;
+    }
+
+
+
 
     // Metal Mine production, cost, energy consumption
     public static final Integer METAL_MINE_UPGRADE_BASE_METAL_COST = 60;
@@ -14,8 +26,10 @@ public class GameConfig {
         return (int) (METAL_MINE_UPGRADE_BASE_CRYSTAL_COST * Math.pow(1.5, level - 1));
     }
 
-    public static Integer calculateMetalMineProductionPerSecond(int level) {
-        return (int) ((30 * level * Math.pow(1.1, level) + 30) / 60);
+    public static double calculateMetalMineProductionPerSecond(int level) {
+        double production = (40 * level * Math.pow(1.1, level) + 40) / 60;
+        BigDecimal bd = new BigDecimal(production).setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     public static Integer calculateMetalMineEnergyConsumption(int level) {
@@ -36,8 +50,10 @@ public class GameConfig {
         return (int) (CRYSTAL_MINE_UPGRADE_BASE_CRYSTAL_COST * Math.pow(1.6, level - 1));
     }
 
-    public static Integer calculateCrystalMineProductionPerSecond(int level) {
-        return (int) ((20 * level * Math.pow(1.1, level) + 20) / 60);
+    public static double calculateCrystalMineProductionPerSecond(int level) {
+        double production = ((30 * level * Math.pow(1.1, level) + 30) / 60);
+        BigDecimal bd = new BigDecimal(production).setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     public static Integer calculateCrystalMineEnergyConsumption(int level) {
@@ -59,13 +75,52 @@ public class GameConfig {
     }
 
     // the 20 here is a place holder for planet average temperature
-    public static Integer calculateDeuteriumMineProductionPerSecond(int level) {
-        return (int) ((10 * level * 20 + 10) / 60);
+    public static double calculateDeuteriumMineProductionPerSecond(int level) {
+        double production = ((5 * level * 10 + 10) / 60);
+        BigDecimal bd = new BigDecimal(production).setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+        // at level 1, 1 deuterium per sec
     }
 
     public static Integer calculateDeuteriumMineEnergyConsumption(int level) {
         return (int) (20 * level * Math.pow(1.1, level));
     }
 
+
+    // STORAGE
+    // Metal Storage upgrade cost and capacity
+    public static Integer calculateMetalStorageUpgradeMetalCost(int level) {
+        return (int) (1000 * Math.pow(2, level - 1));
+    }
+
+    public static Integer calculateMetalStorageCapacity(int level) {
+        return (int) (5000 * 2.5 * Math.pow(Math.E, (20/33) * level));
+    }
+
+    // Crystal Storage upgrade cost and capacity
+    public static Integer calculateCrystalStorageUpgradeMetalCost(int level) {
+        return (int) (500 * Math.pow(2, level + 1));
+    }
+
+    public static Integer calculateCrystalStorageUpgradeCrystalCost(int level) {
+        return (int) (250 * Math.pow(2, level + 1));
+    }
+
+    public static Integer calculateCrystalStorageCapacity(int level) {
+        return (int) (5000 * 2.5 * Math.pow(Math.E, (20/33) * level));
+    }
+
+    // Crystal Storage upgrade cost and capacity
+    public static Integer calculateDeuteriumStorageUpgradeMetalCost(int level) {
+        return (int) (1000 * Math.pow(2, level - 1));
+    }
+
+    public static Integer calculateDeuteriumStorageUpgradeCrystalCost(int level) {
+        return (int) (1000 * Math.pow(2, level - 1));
+    }
+
+    public static Integer calculateDeuteriumStorageCapacity(int level) {
+        return (int) (5000 * 2.5 * Math.pow(Math.E, (20/33) * level));
+    }
 
 }

@@ -63,24 +63,78 @@ public class PlanetService {
     }
 
     public void upgradePlanetBuilding(Long id, String buildingType) throws Exception {
+        if (canUpgradeBuilding(id, buildingType)) {
+            Planet planet = repository.findById(id).get();
+            PlanetBuildings buildings = planet.getPlanetBuildings();
+            switch (buildingType) {
+                case "metalMine" -> buildings.incrementMetalMineLevel();
+                case "crystalMine" -> buildings.incrementCrystalMineLevel();
+                case "deuteriumMine" -> buildings.incrementDeuteriumMineLevel();
+                case "solarPlant" -> buildings.incrementSolarPlantLevel();
+                case "metalStorage" -> buildings.incrementMetalStorageLevel();
+                case "crystalStorage" -> buildings.incrementCrystalStorageLevel();
+                case "deuteriumStorage" -> buildings.incrementDeuteriumStorageLevel();
+                case "shipyard" -> buildings.incrementShipyardLevel();
+                case "researchLab" -> buildings.incrementResearchLabLevel();
+                default -> throw new Exception("Invalid building type");
+            }
+            planet.setPlanetBuildings(buildings);
+            System.out.println("Upgraded " + buildingType);
+            System.out.println("It is now level: " + planet.getPlanetBuildings().getMetalMineLevel());
+            repository.save(planet);
+        }
+        else {
+            throw new Exception("Not enough resources to upgrade building");
+        }
+    }
+
+    public boolean canUpgradeBuilding(Long id, String buildingType) {
+        updateResources(id);
         Planet planet = repository.findById(id).get();
         PlanetBuildings buildings = planet.getPlanetBuildings();
         switch (buildingType) {
-            case "metalMine" -> buildings.incrementMetalMineLevel();
-            case "crystalMine" -> buildings.incrementCrystalMineLevel();
-            case "deuteriumMine" -> buildings.incrementDeuteriumMineLevel();
-            case "solarPlant" -> buildings.incrementSolarPlantLevel();
-            case "metalStorage" -> buildings.incrementMetalStorageLevel();
-            case "crystalStorage" -> buildings.incrementCrystalStorageLevel();
-            case "deuteriumStorage" -> buildings.incrementDeuteriumStorageLevel();
-            case "shipyard" -> buildings.incrementShipyardLevel();
-            case "researchLab" -> buildings.incrementResearchLabLevel();
-            default -> throw new Exception("Invalid building type");
+            case "metalMine" -> {
+                int metalCost = GameConfig.calculateMetalMineUpgradeMetalCost(buildings.getMetalMineLevel());
+                int crystalCost = GameConfig.calculateMetalMineUpgradeCrystalCost(buildings.getMetalMineLevel());
+                return buildings.getMetalAmount() >= metalCost && buildings.getCrystalAmount() >= crystalCost;
+            }
+            case "crystalMine" -> {
+                int metalCost = GameConfig.calculateCrystalMineUpgradeMetalCost(buildings.getCrystalMineLevel());
+                int crystalCost = GameConfig.calculateCrystalMineUpgradeCrystalCost(buildings.getCrystalMineLevel());
+                return buildings.getMetalAmount() >= metalCost && buildings.getCrystalAmount() >= crystalCost;
+            }
+            case "deuteriumMine" -> {
+                int metalCost = GameConfig.calculateDeuteriumMineUpgradeMetalCost(buildings.getDeuteriumMineLevel());
+                int crystalCost = GameConfig.calculateDeuteriumMineUpgradeCrystalCost(buildings.getDeuteriumMineLevel());
+                return buildings.getMetalAmount() >= metalCost && buildings.getCrystalAmount() >= crystalCost;
+            }
+            case "solarPlant" -> {
+                return true;
+            }
+            case "metalStorage" -> {
+                int metalCost = GameConfig.calculateMetalStorageUpgradeMetalCost(buildings.getMetalStorageLevel());
+                return buildings.getMetalAmount() >= metalCost;
+            }
+            case "crystalStorage" -> {
+                int metalCost = GameConfig.calculateCrystalStorageUpgradeMetalCost(buildings.getCrystalStorageLevel());
+                int crystalCost = GameConfig.calculateCrystalStorageUpgradeCrystalCost(buildings.getCrystalStorageLevel());
+                return buildings.getMetalAmount() >= metalCost && buildings.getCrystalAmount() >= crystalCost;
+            }
+            case "deuteriumStorage" -> {
+                int metalCost = GameConfig.calculateDeuteriumStorageUpgradeMetalCost(buildings.getDeuteriumStorageLevel());
+                int crystalCost = GameConfig.calculateDeuteriumStorageUpgradeCrystalCost(buildings.getDeuteriumStorageLevel());
+                return buildings.getMetalAmount() >= metalCost && buildings.getCrystalAmount() >= crystalCost;
+            }
+            case "shipyard" -> {
+                return true;
+            }
+            case "researchLab" -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
         }
-        planet.setPlanetBuildings(buildings);
-        System.out.println("Upgraded " + buildingType);
-        System.out.println("It is now level: " + planet.getPlanetBuildings().getMetalMineLevel());
-        repository.save(planet);
     }
 
     public void updateResources(Long planetId) {
@@ -93,18 +147,34 @@ public class PlanetService {
         long secondsElapsed = duration.getSeconds();
 
         // Constants
-        int metalPerSecond = GameConfig.calculateMetalMineProductionPerSecond(buildings.getMetalMineLevel());
-        int crystalPerSecond = GameConfig.calculateCrystalMineProductionPerSecond(buildings.getCrystalMineLevel());
-        int deuteriumPerSecond = GameConfig.calculateDeuteriumMineProductionPerSecond(buildings.getDeuteriumMineLevel());
+        double metalPerSecond = GameConfig.calculateMetalMineProductionPerSecond(buildings.getMetalMineLevel());
+        double crystalPerSecond = GameConfig.calculateCrystalMineProductionPerSecond(buildings.getCrystalMineLevel());
+        double deuteriumPerSecond = GameConfig.calculateDeuteriumMineProductionPerSecond(buildings.getDeuteriumMineLevel());
+
         // Resorces produced since then
-        int metalProduced = buildings.getMetalMineLevel() * metalPerSecond * (int) secondsElapsed;
-        int crystalProduced = buildings.getCrystalMineLevel() * crystalPerSecond * (int) secondsElapsed;
-        int deuteriumProduced = buildings.getDeuteriumMineLevel() * deuteriumPerSecond * (int) secondsElapsed;
+        double metalProduced = buildings.getMetalMineLevel() * metalPerSecond * (int) secondsElapsed;
+        double crystalProduced = buildings.getCrystalMineLevel() * crystalPerSecond * (int) secondsElapsed;
+        double deuteriumProduced = buildings.getDeuteriumMineLevel() * deuteriumPerSecond * (int) secondsElapsed;
+
+        int newMetalAmount = (int) (buildings.getMetalAmount() + metalProduced);
+        int newCrystalAmount = (int) (buildings.getCrystalAmount() + crystalProduced);
+        int newDeuteriumAmount = (int) (buildings.getDeuteriumAmount() + deuteriumProduced);
+
+        // Check if resources are over the storage limit
+        if (newMetalAmount > GameConfig.calculateMetalStorageCapacity(buildings.getMetalStorageLevel())) {
+            newMetalAmount = GameConfig.calculateMetalStorageCapacity(buildings.getMetalStorageLevel());
+        }
+        if (newCrystalAmount > GameConfig.calculateCrystalStorageCapacity(buildings.getCrystalStorageLevel())) {
+            newCrystalAmount = GameConfig.calculateCrystalStorageCapacity(buildings.getCrystalStorageLevel());
+        }
+        if (newDeuteriumAmount > GameConfig.calculateDeuteriumStorageCapacity(buildings.getDeuteriumStorageLevel())) {
+            newDeuteriumAmount = GameConfig.calculateDeuteriumStorageCapacity(buildings.getDeuteriumStorageLevel());
+        }
 
         // Update resources
-        buildings.setMetalAmount(buildings.getMetalAmount() + metalProduced);
-        buildings.setCrystalAmount(buildings.getCrystalAmount() + crystalProduced);
-        buildings.setDeuteriumAmount(buildings.getDeuteriumAmount() + deuteriumProduced);
+        buildings.setMetalAmount(newMetalAmount);
+        buildings.setCrystalAmount(newCrystalAmount);
+        buildings.setDeuteriumAmount(newDeuteriumAmount);
 
         // set last updated to now
         buildings.setLastUpdated(now);
