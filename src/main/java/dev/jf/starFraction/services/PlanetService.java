@@ -152,9 +152,9 @@ public class PlanetService {
         double deuteriumPerSecond = GameConfig.calculateDeuteriumMineProductionPerSecond(buildings.getDeuteriumMineLevel());
 
         // Resorces produced since then
-        double metalProduced = buildings.getMetalMineLevel() * metalPerSecond * (int) secondsElapsed;
-        double crystalProduced = buildings.getCrystalMineLevel() * crystalPerSecond * (int) secondsElapsed;
-        double deuteriumProduced = buildings.getDeuteriumMineLevel() * deuteriumPerSecond * (int) secondsElapsed;
+        double metalProduced = metalPerSecond * (int) secondsElapsed;
+        double crystalProduced = crystalPerSecond * (int) secondsElapsed;
+        double deuteriumProduced = deuteriumPerSecond * (int) secondsElapsed;
 
         int newMetalAmount = (int) (buildings.getMetalAmount() + metalProduced);
         int newCrystalAmount = (int) (buildings.getCrystalAmount() + crystalProduced);

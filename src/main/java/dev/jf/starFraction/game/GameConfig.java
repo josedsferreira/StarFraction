@@ -76,7 +76,7 @@ public class GameConfig {
 
     // the 20 here is a place holder for planet average temperature
     public static double calculateDeuteriumMineProductionPerSecond(int level) {
-        double production = ((5 * level * 10 + 10) / 60);
+        double production = ((1 * level + 1));
         BigDecimal bd = new BigDecimal(production).setScale(2, RoundingMode.HALF_UP);
         return bd.doubleValue();
         // at level 1, 1 deuterium per sec

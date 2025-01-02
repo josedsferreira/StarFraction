@@ -86,6 +86,7 @@ public class UserController {
     @GetMapping("/userplanets/{id}")
     public ResponseEntity<List<Planet>> getPlanetsByUserId(@PathVariable Long id) {
         List<Planet> planetList = service.getPlanetsByUserId(id);
+        
         if (planetList == null) {
             throw new ResponseStatusException(
             HttpStatus.NOT_FOUND, "No planets found for user with ID " + id
