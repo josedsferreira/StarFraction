@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import dev.jf.starFraction.DTOs.UpgradeStatusDTO;
 import dev.jf.starFraction.models.Planet;
+import dev.jf.starFraction.models.PlanetBuildings;
 import dev.jf.starFraction.services.PlanetService;
 
 
@@ -85,7 +87,7 @@ public class PlanetController {
     @PostMapping("/{id}/upgradeBuilding/{buildingType}")
     public ResponseEntity<Planet> upgradeBuilding(@PathVariable Long id, @PathVariable String buildingType) {
         try {
-            service.upgradePlanetBuilding(id, buildingType);
+            service.orderPlanetBuildingUpgrade(id, buildingType);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             throw new ResponseStatusException(
@@ -93,5 +95,24 @@ public class PlanetController {
             );
         }
     }
+
+    // Check if planet is doing an upgrade or if it finished
+    @GetMapping("/{id}/upgradeStatus")
+    public ResponseEntity<UpgradeStatusDTO> getUpgradeStatus(@PathVariable Long id) {
+        Optional<Planet> planet = service.getPlanetById(id);
+        if (planet.isEmpty()) {
+            throw new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Planet not found with ID " + id
+            );
+        }
+        PlanetBuildings buildings = planet.get().getPlanetBuildings();
+        UpgradeStatusDTO status = new UpgradeStatusDTO(
+                                        buildings.getUpgradeFinishTime(),
+                                        buildings.getBuildingBeingUpgraded()
+        );
+        System.out.println("Upgrade status: " + status);
+        return ResponseEntity.ok(status);
+    }
+
 
 }

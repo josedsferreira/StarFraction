@@ -45,6 +45,8 @@ public class PlanetBuildings {
     @Column(name="deuterium_storage_level", columnDefinition = "INTEGER DEFAULT 0")
     private Integer deuteriumStorageLevel = 0;
 
+    // Misc buildings
+
     @Column(name="shipyard_level", columnDefinition = "INTEGER DEFAULT 0")
     private Integer shipyardLevel = 0;
 
@@ -69,6 +71,14 @@ public class PlanetBuildings {
     // Timestamp
     @Column(name = "last_updated", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime lastUpdated = LocalDateTime.now();
+
+    // Upgrade Status
+
+    @Column(name = "upgrade_finish_time", columnDefinition = "TIMESTAMP")
+    private LocalDateTime upgradeFinishTime;
+    
+    @Column(name = "building_being_upgraded", columnDefinition = "VARCHAR(255) DEFAULT 'None'")
+    private String buildingBeingUpgraded = "None";
 
 
 
@@ -108,4 +118,22 @@ public class PlanetBuildings {
     public void incrementSolarPlantLevel() {
         this.solarPlantLevel++;
     }
+
+    public void setBuildingBeingUpgraded(String building) {
+        this.buildingBeingUpgraded = building;
+    }
+
+    public String getBuildingBeingUpgraded() {
+        return this.buildingBeingUpgraded;
+    }
+
+    public void setUpgradeFinishTime(LocalDateTime finishTime) {
+        this.upgradeFinishTime = finishTime;
+    }
+
+    public LocalDateTime getUpgradeFinishTime() {
+        return this.upgradeFinishTime;
+    }
+
+
 }

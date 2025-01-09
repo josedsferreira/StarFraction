@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import dev.jf.starFraction.DTOs.BuildingDetailsDTO;
 import dev.jf.starFraction.DTOs.UserDTO;
 import dev.jf.starFraction.models.Planet;
 import dev.jf.starFraction.models.User;
@@ -92,6 +93,19 @@ public class UserController {
         if (planetList == null) {
             throw new ResponseStatusException(
             HttpStatus.NOT_FOUND, "No planets found for user with ID " + id
+            );
+        }
+        else return ResponseEntity.ok(planetList);
+    }
+
+    // GET PLANETS WITH FULL DETAILS BY USER ID
+    @GetMapping("/userplanets/withdetails/{id}")
+    public ResponseEntity<List<BuildingDetailsDTO>> getPlanetsWithDetailsByUserId(@PathVariable Long id) {
+        List<BuildingDetailsDTO> planetList = service.getPlanetsWithDetailsByUserId(id);
+        
+        if (planetList == null) {
+            throw new ResponseStatusException(
+            HttpStatus.NOT_FOUND, "No planets with full details found for user with ID " + id
             );
         }
         else return ResponseEntity.ok(planetList);

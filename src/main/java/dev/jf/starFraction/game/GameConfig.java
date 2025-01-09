@@ -8,13 +8,30 @@ public class GameConfig {
     // Contruction Time
     public static Integer calculateBuildingTimeInSeconds(int metalCost, int CrystalCost) {
         int robotFactoryLevel = 1;
-        return (int) ((metalCost + CrystalCost) / (2500 * robotFactoryLevel)) * 60;
+        double costs = (double)(metalCost + CrystalCost);
+        double factor = 2500 * robotFactoryLevel;
+        double result = (costs / factor) * 60;
+        int integerResult = (int) result;
+
+        /* System.out.println("");
+        System.out.println("Construction time (double): " + result);
+        System.out.println("Construction time (int): " + integerResult);
+        System.out.println("Metal cost: " + metalCost);
+        System.out.println("Crystal cost: " + CrystalCost);
+        System.out.println("Costs: " + costs);
+        System.out.println("Factor: " + factor); */
+
+        if (result > 0) {
+            return integerResult;
+        } else {
+            return 1;
+        }
     }
 
 
 
 
-    // Metal Mine production, cost, energy consumption
+    // METAL Mine production, cost, energy consumption
     public static final Integer METAL_MINE_UPGRADE_BASE_METAL_COST = 60;
     public static final Integer METAL_MINE_UPGRADE_BASE_CRYSTAL_COST = 15;
 
@@ -38,7 +55,7 @@ public class GameConfig {
 
 
 
-    // Crystal Mine production, cost, energy consumption
+    // CRYSTAL Mine production, cost, energy consumption
     public static final Integer CRYSTAL_MINE_UPGRADE_BASE_METAL_COST = 48;
     public static final Integer CRYSTAL_MINE_UPGRADE_BASE_CRYSTAL_COST = 24;
 
@@ -62,7 +79,7 @@ public class GameConfig {
 
 
 
-    // Deuterium Mine production, cost, energy consumption
+    // DEUTERIUM Mine production, cost, energy consumption
     public static final Integer DEUTERIUM_MINE_UPGRADE_BASE_METAL_COST = 35;
     public static final Integer DEUTERIUM_MINE_UPGRADE_BASE_CRYSTAL_COST = 30;
 
